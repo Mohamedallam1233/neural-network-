@@ -1,0 +1,96 @@
+def sign(mylist):
+    final = list()
+    for i in mylist:
+        if i > 0:
+            final.append(1)
+        elif i < 0:
+            final.append(-1)
+        else:
+            final.append(0)
+    return final
+def hetero_associative_memory(p,sc,sr,tc,tr):
+    c = list()
+    cc = list()
+    collect_matrix = list()
+    for i in range(1, 1 + p):
+        entries = [int(a) for a in input("enter store pattern n ").split()]
+        arr1 = np.array(entries).reshape(sr, sc)
+        c.append(arr1)
+        entries_t = [int(a) for a in input("enter test pattern n ").split()]
+        arr2 = np.array(entries_t).reshape(tr, tc)
+        cc.append(arr2)
+    for i in range(0, p):
+        collect_matrix.append(np.dot(c[i].transpose(), cc[i]))
+    shape = np.shape(np.dot(c[0].transpose(), cc[0]))
+    w = np.full(shape, 0)
+    for i in collect_matrix:
+        w += i
+    print(w)
+    x = [int(a) for a in input("enter test pattern").split()]
+    result = np.dot(x, w)
+    final_result = list()
+    for i in result:
+        if i > 0:
+            final_result.append(1)
+        else:
+            final_result.append(0)
+    print(final_result)
+def auto_associative(R,C):
+    entries = [int(a) for a in input().split()]
+    arr1 = np.array(entries).reshape(R, C)
+    arr1_transpose = arr1.transpose()
+    w = np.dot(arr1_transpose, arr1)
+    print(w)
+    x = [int(a) for a in input("enter test pattern").split()]
+    result = np.dot(x, w)
+    final = list()
+    for i in result:
+        if i > 0:
+            final.append(1)
+        elif i < 0:
+            final.append(-1)
+        else:
+            final.append(0)
+    print(final)
+def iterative_auto_associative(R,C):
+    entries = [int(a) for a in input().split()]
+    arr1 = np.array(entries).reshape(R, C)
+    arr1_transpose = arr1.transpose()
+    w = np.dot(arr1_transpose, arr1) - np.eye(C)
+    print(w)
+    x = [int(a) for a in input("enter test pattern").split()]
+    result = np.dot(x, w)
+    final = list()
+    for i in result:
+        if i > 0:
+            final.append(1)
+        elif i < 0:
+            final.append(-1)
+        else:
+            final.append(0)
+    print(final)
+def BAM(numper_of_pair,f_pair_c,f_pair_r,s_pair_c,s_pair_r):
+    c = list()
+    cc = list()
+    collect_matrix = list()
+    for i in range(1, 1 + numper_of_pair):
+        entries = [int(a) for a in input("enter store pattern n ").split()]
+        arr1 = np.array(entries).reshape(f_pair_r, f_pair_c)
+        c.append(arr1)
+        entries_t = [int(a) for a in input("enter test pattern n ").split()]
+        arr2 = np.array(entries_t).reshape(s_pair_r, s_pair_c)
+        cc.append(arr2)
+    for i in range(numper_of_pair):
+        collect_matrix.append(np.dot(c[i], cc[i].transpose()))
+    shape = np.shape(np.dot(c[0], cc[i].transpose()))
+    w = np.full(shape, 0)
+    for i in collect_matrix:
+        w += i
+    print(w)
+    for i in range(0,  numper_of_pair):
+        y=array(sign(dot(w.transpose(),c[i])))
+        if (y != cc[i]).all() :
+            c[i]=dot(w,cc[i])
+        x = array(sign(dot(w, cc[i])))
+        if (x != c[i]).all():
+            cc[i] = dot(w.transpose(), c[i])
